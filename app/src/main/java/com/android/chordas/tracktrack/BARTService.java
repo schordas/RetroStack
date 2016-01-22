@@ -15,7 +15,7 @@ public final class BARTService {
 
   public interface TrainAPI {
     @GET("api/etd/{orig}/{key}")
-    Call<List<BARTModel>> getTrains(
+    Call<BARTModel> getTrains(
         @Path("orig") String origin,
         @Path("key") String key);
   }

@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.android.chordas.tracktrack.model.BARTModel;
+import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
+import com.android.chordas.tracktrack.model.BARTModel.Root.Estimate;
 import java.util.List;
 
 /**
@@ -14,10 +17,10 @@ import java.util.List;
  */
 public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder> {
 
-  private List<TrainInfo> trainInfo;
+  private List<Etd> etds;
 
-  public TrainAdapter(List<TrainInfo> trainInfo){
-    this.trainInfo= trainInfo;
+  public TrainAdapter(List<Etd> etds){
+    this.etds = etds;
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,17 +30,18 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder> 
   }
 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
-    TrainInfo train = trainInfo.get(position);
-    holder.minTextView.setText(train.getMinutes());
-    holder.destTextView.setText(train.getDestination());
-    holder.trainItem.setBackgroundColor(Color.parseColor(train.getHexcolor()));
+    Etd trainDeparture = etds.get(position);
+    Estimate estimate = trainDeparture.getEstimates().get(0);
+    holder.minTextView.setText(estimate.getMinutes());
+    holder.destTextView.setText(trainDeparture.getDestination());
+    holder.trainItem.setBackgroundColor(Color.parseColor(estimate.getHexcolor()));
   }
 
   @Override public int getItemCount() {
-    if (trainInfo != null){
+    if (etds != null){
       return -1;
     }
-    return trainInfo.size();
+    return etds.size();
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder{
