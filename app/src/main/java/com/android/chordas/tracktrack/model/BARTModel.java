@@ -8,7 +8,7 @@ import java.util.List;
 public class BARTModel {
   private Root root;
 
-  private static class Root{
+  public static class Root{
     private String message;
     private String time;
     private String date;
@@ -61,7 +61,7 @@ public class BARTModel {
 
     // ***********************
     // Nested class Station
-    private static class Station{
+    public static class Station{
       private List<Etd> etd;
       private String name;
       private String abbr;
@@ -95,7 +95,7 @@ public class BARTModel {
 
     // ************************
     // Nested class Etd
-    private static class Etd{//Estimated Time of Departure
+    public static class Etd{//Estimated Time of Departure
       private List<Estimate> estimates;
       private String limited;
       private String destination;
@@ -138,7 +138,7 @@ public class BARTModel {
 
     // ************************
     // Nested class Estimate
-    private static class Estimate{
+    public static class Estimate{
       private String minutes;
       private String platform;
       private String direction;
@@ -214,5 +214,9 @@ public class BARTModel {
 
   public void setRoot(Root root){
     this.root = root;
+  }
+
+  public List<Root.Etd> getEtds(){
+    return root.getStation().getEtd();
   }
 }

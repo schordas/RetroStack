@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.android.chordas.tracktrack.model.BARTModel;
+import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +19,10 @@ import com.android.chordas.tracktrack.BARTService.TrainAPI;
 public class MainActivity extends Activity{
 
   private static final String API_BASE_URL = "http://api.bart.gov";
-  private Call<List<BARTModel>> call;
+  private Call<BARTModel> call;
+  private BARTModel bartModel;
+  private List<Etd> etds;
+  private TrainAdapter trainAdapter;
   private String origin;
   private static final String API_KEY = BuildConfig.BART_API_KEY;
 
@@ -31,12 +35,14 @@ public class MainActivity extends Activity{
         .addConverterFactory(SimpleXmlConverterFactory.create())
         .build();
 
+    trainAdapter = new TrainAdapter(etds);
     TrainAPI bartTrain = retrofit.create(TrainAPI.class);
 
     call = bartTrain.getTrains(origin, API_KEY);
-    call.enqueue(new Callback<List<BARTModel>>() {
-      @Override public void onResponse(Response<List<BARTModel>> response) {
-
+    call.enqueue(new Callback<BARTModel>() {
+      @Override public void onResponse(Response<BARTModel> response) {
+        bartModel = response.body();
+        etds = bartModel.getEtds();
       }
 
       @Override public void onFailure(Throwable t) {
