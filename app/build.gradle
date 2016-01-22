@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.2"
+
+  defaultConfig {
+    applicationId "com.android.chordas.tracktrack"
+    minSdkVersion 21
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  buildTypes.each {
+    it.buildConfigField 'String', 'BART_API_KEY', BartApiKey
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile 'com.android.support:recyclerview-v7:23.1.1'
+  compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+  compile ('com.squareup.retrofit2:converter-simplexml:2.0.0-beta3'){
+    exclude group: 'xpp3', module: 'xpp3'
+    exclude group: 'stax', module: 'stax-api'
+    exclude group: 'stax', module: 'stax'
+  }
+}
