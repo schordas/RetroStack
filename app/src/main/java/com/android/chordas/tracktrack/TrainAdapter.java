@@ -16,6 +16,10 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder> 
 
   private List<TrainInfo> trainInfo;
 
+  public TrainAdapter(List<TrainInfo> trainInfo){
+    this.trainInfo= trainInfo;
+  }
+
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View itemView = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.train_item, parent, false);
