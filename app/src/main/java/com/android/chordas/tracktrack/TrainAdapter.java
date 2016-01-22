@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.chordas.tracktrack.model.BARTModel;
 import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
 import com.android.chordas.tracktrack.model.BARTModel.Root.Estimate;
 import java.util.List;
