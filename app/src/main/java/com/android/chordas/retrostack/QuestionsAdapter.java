@@ -24,18 +24,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View itemView = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.question_item, parent, false);
-    Log.i("onCreate", "Oncreate");
     return new ViewHolder(itemView);
   }
 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     SOQuestion.SOItem item = items.get(position);
 
-    Log.i("Title: ", item.getTitle());
-
     holder.title.setText(item.getTitle());
-    holder.link.setText(item.getLink());
-    holder.questionId.setText(item.getQuestion_id());
   }
 
   @Override public int getItemCount() {
@@ -52,8 +47,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     public ViewHolder(View v){
       super(v);
       title = (TextView) v.findViewById(R.id.title);
-      link = (TextView) v.findViewById(R.id.link);
-      questionId = (TextView) v.findViewById(R.id.question_id);
     }
   }
 

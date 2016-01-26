@@ -49,9 +49,7 @@ public class MainActivity extends Activity{
       @Override public void onResponse(Response<SOQuestion> response) {
         question = response.body();
         items = question.getItems();
-        questionsAdapter.swapList(items
-        );
-        Log.i("Response: ", items.get(0).getTitle());
+        questionsAdapter.swapList(items);
       }
 
       @Override public void onFailure(Throwable t) {
