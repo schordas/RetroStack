@@ -2,11 +2,12 @@ package com.android.chordas.tracktrack;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.android.chordas.tracktrack.model.BARTModel;
-import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
+import com.android.chordas.tracktrack.model.BARTModelRoot;
+import com.android.chordas.tracktrack.model.BARTModelRoot.Etd;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,8 +20,7 @@ import com.android.chordas.tracktrack.BARTService.TrainAPI;
 public class MainActivity extends Activity{
 
   private static final String API_BASE_URL = "http://api.bart.gov";
-  private Call<BARTModel> call;
-  private BARTModel bartModel;
+  private Call<BARTModelRoot> call;
   private List<Etd> etds;
   private TrainAdapter trainAdapter;
   private String origin;
@@ -35,14 +35,18 @@ public class MainActivity extends Activity{
         .addConverterFactory(SimpleXmlConverterFactory.create())
         .build();
 
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.departure_list);
+    recyclerView.setAdapter(trainAdapter);
     trainAdapter = new TrainAdapter(etds);
+
     TrainAPI bartTrain = retrofit.create(TrainAPI.class);
+    origin = "12th";
 
     call = bartTrain.getTrains(origin, API_KEY);
-    call.enqueue(new Callback<BARTModel>() {
-      @Override public void onResponse(Response<BARTModel> response) {
-        bartModel = response.body();
-        etds = bartModel.getEtds();
+    call.enqueue(new Callback<BARTModelRoot>() {
+      @Override public void onResponse(Response<BARTModelRoot> response) {
+        Log.i("Response: ", response.body().toString());
+        etds = response.body().getEtds();
       }
 
       @Override public void onFailure(Throwable t) {

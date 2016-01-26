@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
-import com.android.chordas.tracktrack.model.BARTModel.Root.Estimate;
+import com.android.chordas.tracktrack.model.BARTModelRoot.Etd;
+import com.android.chordas.tracktrack.model.BARTModelRoot.Estimate;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder> 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     Etd trainDeparture = etds.get(position);
     Estimate estimate = trainDeparture.getEstimates().get(0);
-    holder.minTextView.setText(estimate.getMinutes());
+    holder.minTextView.setText(trainDeparture.getMinutes());
     holder.destTextView.setText(trainDeparture.getDestination());
     holder.trainItem.setBackgroundColor(Color.parseColor(estimate.getHexcolor()));
   }

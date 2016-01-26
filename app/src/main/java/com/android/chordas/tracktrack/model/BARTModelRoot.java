@@ -5,59 +5,61 @@ import java.util.List;
 /**
  * Created by sam_chordas on 1/21/16.
  */
-public class BARTModel {
-  private Root root;
+public class BARTModelRoot {
+  //private Root root;
+  //
+  //private String uri;
+  //
+  //public static class Root{
+  private String message;
+  private String time;
+  private String date;
+  private String uri;
+  private Station station;
 
-  public static class Root{
-    private String message;
-    private String time;
-    private String date;
-    private String uri;
-    private Station station;
+  // **********************
+  // Getters and Setters for root
+  public String getMessage() {
+    return message;
+  }
 
-    // **********************
-    // Getters and Setters for root
-    public String getMessage() {
-      return message;
-    }
+  public String getTime() {
+    return time;
+  }
 
-    public String getTime() {
-      return time;
-    }
+  public void setTime(String time) {
+    this.time = time;
+  }
 
-    public void setTime(String time) {
-      this.time = time;
-    }
+  public String getDate() {
+    return date;
+  }
 
-    public String getDate() {
-      return date;
-    }
+  public void setDate(String date) {
+    this.date = date;
+  }
 
-    public void setDate(String date) {
-      this.date = date;
-    }
+  public String getUri() {
+    return uri;
+  }
 
-    public String getUri() {
-      return uri;
-    }
+  public void setUri(String uri) {
+    this.uri = uri;
+  }
 
-    public void setUri(String uri) {
-      this.uri = uri;
-    }
+  public Station getStation() {
+    return station;
+  }
 
-    public Station getStation() {
-      return station;
-    }
+  public void setStation(Station station) {
+    this.station = station;
+  }
 
-    public void setStation(Station station) {
-      this.station = station;
-    }
-
-    public void setMessage(String message) {
-      this.message = message;
-    }
-    // End Getters and Setters for root
-    // ***********************
+  public void setMessage(String message) {
+    this.message = message;
+  }
+  // End Getters and Setters for root
+  // ***********************
 
     // ***********************
     // Nested class Station
@@ -100,6 +102,15 @@ public class BARTModel {
       private String limited;
       private String destination;
       private String abbreviation;
+      private String minutes;
+
+      public String getMinutes() {
+        return minutes;
+      }
+
+      public void setMinutes(String minutes) {
+        this.minutes = minutes;
+      }
 
       public List<Estimate> getEstimates() {
         return estimates;
@@ -139,7 +150,6 @@ public class BARTModel {
     // ************************
     // Nested class Estimate
     public static class Estimate{
-      private String minutes;
       private String platform;
       private String direction;
       private String length;
@@ -147,13 +157,6 @@ public class BARTModel {
       private String hexcolor;
       private String bikeflag;
 
-      public String getMinutes() {
-        return minutes;
-      }
-
-      public void setMinutes(String minutes) {
-        this.minutes = minutes;
-      }
 
       public String getPlatform() {
         return platform;
@@ -206,17 +209,15 @@ public class BARTModel {
     // End nested class Estimate
     // ************************
 
-  }
+  //public Root getRoot(){
+  //  return root;
+  //}
+  //
+  //public void setRoot(Root root){
+  //  this.root = root;
+  //}
 
-  public Root getRoot(){
-    return root;
-  }
-
-  public void setRoot(Root root){
-    this.root = root;
-  }
-
-  public List<Root.Etd> getEtds(){
-    return root.getStation().getEtd();
+  public List<Etd> getEtds(){
+    return getStation().getEtd();
   }
 }
