@@ -2,7 +2,6 @@ package com.android.chordas.retrostack;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +29,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     SOQuestion.SOItem item = items.get(position);
 
-    //item.getTitle().replace("&#")
-
     holder.title.setText(item.getTitle());
   }
 
@@ -44,8 +41,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
   public static class ViewHolder extends RecyclerView.ViewHolder{
     public TextView title;
-    public TextView link;
-    public TextView questionId;
     public ViewHolder(View v){
       super(v);
       title = (TextView) v.findViewById(R.id.title);
