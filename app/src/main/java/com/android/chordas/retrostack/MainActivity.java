@@ -1,30 +1,33 @@
-package com.android.chordas.tracktrack;
+package com.android.chordas.retrostack;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.android.chordas.tracktrack.model.BARTModel;
-import com.android.chordas.tracktrack.model.BARTModel.Root.Etd;
+import com.android.chordas.retrostack.model.SOQuestion;
+import com.android.chordas.retrostack.SOService.SOAPI;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.SimpleXmlConverterFactory;
-import com.android.chordas.tracktrack.BARTService.TrainAPI;
+
 
 
 public class MainActivity extends Activity{
 
-  private static final String API_BASE_URL = "http://api.bart.gov";
-  private Call<BARTModel> call;
-  private BARTModel bartModel;
-  private List<Etd> etds;
-  private TrainAdapter trainAdapter;
-  private String origin;
-  private static final String API_KEY = BuildConfig.BART_API_KEY;
+  private static final String API_BASE_URL = "https://api.stackexchange.com";
+  private Call<SOQuestion> call;
+  private SOQuestion question;
+  private List<SOQuestion.SOItem> items;
+  private QuestionsAdapter questionsAdapter;
+  private final String intitle = "android";
+  private final String site = "stackoverflow";
+  private final String version = "2.2";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,21 +35,26 @@ public class MainActivity extends Activity{
 
     Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(API_BASE_URL)
-        .addConverterFactory(SimpleXmlConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build();
 
-    trainAdapter = new TrainAdapter(etds);
-    TrainAPI bartTrain = retrofit.create(TrainAPI.class);
+    questionsAdapter = new QuestionsAdapter(items);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.question_list);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(questionsAdapter);
 
-    call = bartTrain.getTrains(origin, API_KEY);
-    call.enqueue(new Callback<BARTModel>() {
-      @Override public void onResponse(Response<BARTModel> response) {
-        bartModel = response.body();
-        etds = bartModel.getEtds();
+    SOAPI soapi = retrofit.create(SOAPI.class);
+
+    call = soapi.getQuestions(version, intitle, site);
+    call.enqueue(new Callback<SOQuestion>() {
+      @Override public void onResponse(Response<SOQuestion> response) {
+        question = response.body();
+        items = question.getItems();
+        questionsAdapter.swapList(items);
       }
 
       @Override public void onFailure(Throwable t) {
-        Log.e("getTrains threw: ", t.getMessage());
+        Log.e("getQuestions threw: ", t.getMessage());
       }
     });
   }
