@@ -5,7 +5,7 @@ android {
   buildToolsVersion "23.0.2"
 
   defaultConfig {
-    applicationId "com.android.chordas.tracktrack"
+    applicationId "com.android.chordas.retrostack"
     minSdkVersion 21
     targetSdkVersion 23
     versionCode 1
