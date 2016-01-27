@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public final class SOService {
 
   public interface SOAPI {
-    @GET("2.2/search?page=1&order=desc&sort=activity")
+    @GET("2.2/search?page=1&order=desc&sort=activity&unsafe=true")
     Call<SOQuestion> getQuestions(
         @Query("intitle") String intitle,
         @Query("site") String site);

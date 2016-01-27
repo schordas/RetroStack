@@ -30,6 +30,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     SOQuestion.SOItem item = items.get(position);
 
+    //item.getTitle().replace("&#")
+
     holder.title.setText(item.getTitle());
   }
 
@@ -52,6 +54,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
   public void swapList(List<SOQuestion.SOItem> items){
     this.items = items;
+    notifyDataSetChanged();
   }
 
 }
