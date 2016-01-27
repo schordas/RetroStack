@@ -4,6 +4,7 @@ import com.android.chordas.retrostack.model.SOQuestion;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -12,8 +13,10 @@ import retrofit2.http.Query;
 public final class SOService {
 
   public interface SOAPI {
-    @GET("2.2/search?page=1&order=desc&sort=activity&unsafe=true")
+    // unsafe=true ensures unsafe response. Prevents HTML escape characters
+    @GET("{version}/search?page=1&order=desc&sort=activity&unsafe=true")
     Call<SOQuestion> getQuestions(
+        @Path("version") String version,
         @Query("intitle") String intitle,
         @Query("site") String site);
   }

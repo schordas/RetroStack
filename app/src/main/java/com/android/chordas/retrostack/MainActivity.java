@@ -27,6 +27,7 @@ public class MainActivity extends Activity{
   private QuestionsAdapter questionsAdapter;
   private final String intitle = "android";
   private final String site = "stackoverflow";
+  private final String version = "2.2";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class MainActivity extends Activity{
 
     SOAPI soapi = retrofit.create(SOAPI.class);
 
-    call = soapi.getQuestions(intitle, site);
+    call = soapi.getQuestions(version, intitle, site);
     call.enqueue(new Callback<SOQuestion>() {
       @Override public void onResponse(Response<SOQuestion> response) {
         question = response.body();
