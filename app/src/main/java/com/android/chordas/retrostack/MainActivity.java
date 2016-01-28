@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.android.chordas.retrostack.model.SOQuestion;
 import com.android.chordas.retrostack.SOService.SOAPI;
 import java.util.List;
+import java.util.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -27,13 +28,22 @@ public class MainActivity extends Activity{
   private SOQuestion question;
   private List<SOQuestion.SOItem> items;
   private QuestionsAdapter questionsAdapter;
+  private Random random;
   private final String intitle = "android";
   private final String site = "stackoverflow";
-  private final String version = "2.2";
+  private String version;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    // Random boolean used to generate Network error code by changing Stack Overflow API version
+    random = new Random();
+    if (random.nextBoolean()){
+      version = "2.2";
+    } else {
+      version = "fail";
+    }
 
     Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(API_BASE_URL)
