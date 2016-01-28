@@ -1,5 +1,6 @@
 package com.android.chordas.retrostack;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.android.chordas.retrostack.model.SOQuestion;
 import com.android.chordas.retrostack.SOService.SOAPI;
 import java.util.List;
@@ -48,9 +50,20 @@ public class MainActivity extends Activity{
     call = soapi.getQuestions(version, intitle, site);
     call.enqueue(new Callback<SOQuestion>() {
       @Override public void onResponse(Response<SOQuestion> response) {
-        question = response.body();
-        items = question.getItems();
-        questionsAdapter.swapList(items);
+        try {
+          question = response.body();
+          items = question.getItems();
+          questionsAdapter.swapList(items);
+        } catch (NullPointerException e){
+          Toast toast = null;
+          if (response.code() == 401){
+            toast = Toast.makeText(MainActivity.this, "Unauthenticated", Toast.LENGTH_SHORT);
+          } else if (response.code() >= 400){
+            toast = Toast.makeText(MainActivity.this, "Client Error " + response.code()
+                + " " + response.message(), Toast.LENGTH_SHORT);
+          }
+          toast.show();
+        }
       }
 
       @Override public void onFailure(Throwable t) {

@@ -14,7 +14,7 @@ public final class SOService {
 
   public interface SOAPI {
     // unsafe=true ensures unsafe response. Prevents HTML escape characters
-    @GET("{version}/search?page=1&order=desc&sort=activity&unsafe=true")
+    @GET("{version}/seartch?page=1&order=desc&sort=activity&unsafe=true")
     Call<SOQuestion> getQuestions(
         @Path("version") String version,
         @Query("intitle") String intitle,
