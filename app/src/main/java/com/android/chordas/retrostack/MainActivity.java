@@ -31,19 +31,19 @@ public class MainActivity extends Activity{
   private Random random;
   private final String intitle = "android";
   private final String site = "stackoverflow";
-  private String version;
+  private String version = "2.2";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
     // Random boolean used to generate Network error code by changing Stack Overflow API version
-    random = new Random();
-    if (random.nextBoolean()){
-      version = "2.2";
-    } else {
-      version = "fail";
-    }
+    //random = new Random();
+    //if (random.nextBoolean()){
+    //  version = "2.2";
+    //} else {
+    //  version = "fail";
+    //}
 
     Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(API_BASE_URL)
